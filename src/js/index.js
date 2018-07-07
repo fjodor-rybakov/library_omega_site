@@ -1,4 +1,11 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom'
 
-console.log("Новое приложение");
+class MyComponent extends React.Component {
+    render() {
+        return(<p>Component name is {this.props.name}</p>);
+    }
+}
+window.renderApp = function(id){
+    ReactDOM.render(<MyComponent name="value" />, document.getElementById(id))
+};
