@@ -9,7 +9,7 @@
   },
   "homepage": "https://github.com/fjodor-rybakov/library_omega_site#readme",
   "scripts": {
-    "build": "webpack",
+    "build": "node C:/library_omega/index.js",
     "start": "webpack --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

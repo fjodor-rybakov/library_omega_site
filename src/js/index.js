@@ -1,11 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom'
+import { render } from 'react-dom';
 
-class MyComponent extends React.Component {
-    render() {
-        return(<p>Component name is {this.props.name}</p>);
-    }
+function MyComponent(props) {
+	return (
+		<div>
+			<p>Component name is {props.name}</p>
+		</div>
+	);
 }
-window.renderApp = function(id){
-    ReactDOM.render(<MyComponent name="value" />, document.getElementById(id))
-};
+
+render(<MyComponent name="value"/>, $('#root')[0]);
