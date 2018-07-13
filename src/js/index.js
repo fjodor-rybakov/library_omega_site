@@ -3,15 +3,19 @@ import ReactDOM, { render } from 'react-dom';
 import Library from './Library';
 import NotFound from './NotFound';
 import Books from './Books';
+import ShowPages from './ShowPages';
 import { HashRouter, Route, Switch } from 'react-router-dom';
+
+var labelName = "Library Omega";
 
 ReactDOM.render(
 	<HashRouter>
 		<div>
             <Switch>
-            	<Route exact path="/" render={()=><Library name="Library Omega" />} />
-				<Route path="/books" component={Books} />
-				<Route component={NotFound} />
+            	<Route exact path="/" render={()=><Library name={ labelName } />} />
+				<Route exact path="/books" component={Books} />
+				<Route exact path="/books/showPage/:numPage" render={()=><ShowPages name={ labelName } />} />
+				<Route component={ NotFound } />
 			</Switch>
 		</div>
 	</HashRouter>,
