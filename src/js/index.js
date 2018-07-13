@@ -1,9 +1,8 @@
 import React from 'react';
-import { render } from 'react-dom';
+import ReactDOM, { render } from 'react-dom';
 import Library from './Library';
 import NotFound from './NotFound';
 import Books from './Books';
-import ReactDOM from 'react-dom';
 import { HashRouter, Route, Switch } from 'react-router-dom';
 
 ReactDOM.render(
