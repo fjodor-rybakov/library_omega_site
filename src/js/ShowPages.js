@@ -3,23 +3,28 @@ import Header from './Header';
 
 class ShowPages extends Component {
 	constructor(props) {
-        super(props);
+		super(props);
 
-        this.state = {
-            todos: []
-        };
-    }
+		this.state = {
+			books: [] // его тоже выводит хз почему
+		};
+	}
 
-    componentDidMount() {
-    	fetch('http://localhost:3000/books/showPage/1').then(results => { return results.json() }).then(data => {
-	         this.setState({books: data });
-	    }).catch(() => {
-	         alert('Ошибка получения данных!');
-	    });
-        /*fetch(`this.props.requestAddress`).then(res => {
-            this.setState({ todos: res.todos });
-        });*/
-    }
+	componentDidMount() {
+		fetch('/books/showPage/1')
+			.then(results => { 
+				return results.json() 
+			})
+			.then(data => { 
+				this.setState({books: data }); 
+			})
+			.catch(() => { 
+				alert('Ошибка получения данных!');
+			});
+		/*fetch(`this.props.requestAddress`).then(res => {
+			this.setState({ todos: res.todos });
+		});*/
+	}
 
 	render() {
 		console.log(this.state.books);
