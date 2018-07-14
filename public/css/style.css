@@ -33,9 +33,3 @@
 	height: 300px;
 	background-color: #007633;
 }
-
-p /* Потом можно будет удалить */
-{
-	padding-top: 10px;
-	text-align: center;
-}

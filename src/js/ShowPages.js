@@ -21,17 +21,27 @@ class ShowPages extends Component {
 			.catch(() => { 
 				alert('Ошибка получения данных!');
 			});
-		/*fetch(`this.props.requestAddress`).then(res => {
-			this.setState({ todos: res.todos });
-		});*/
 	}
 
 	render() {
-		console.log(this.state.books);
+		//console.log(this.state.books);
+		const bookElements = this.state.books.map((item, index) => 
+			<div key = {index} className="col-md-3">
+				<h2>{item.name}</h2>
+				<a href={item.link}>Ссылка на магазин</a>
+				<h4>{item.authors}</h4>
+				<p>Книга {item.available ? "доступна" : "недоступна"}</p>
+			</div>
+		)
+
 		return (
 			<div>
 				<Header name={this.props.name} />
-				
+				<div className="container">
+					<div className="row">
+						{bookElements}
+					</div>
+				</div>
 			</div>
 		);
 	}
