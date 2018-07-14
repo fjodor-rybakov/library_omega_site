@@ -11,7 +11,8 @@ class ShowPages extends Component {
 	}
 
 	componentDidMount() {
-		fetch('/books/showPage/1')
+
+		fetch(`/books/showPage/${this.props.match.params.numPage}`)
 			.then(results => { 
 				return results.json() 
 			})
@@ -25,6 +26,7 @@ class ShowPages extends Component {
 
 	render() {
 		//console.log(this.state.books);
+		//console.log(this.props.match.params.numPage);
 		const bookElements = this.state.books.map((item, index) => 
 			<div key = {index} className="col-md-3">
 				<h2>{item.name}</h2>

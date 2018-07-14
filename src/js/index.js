@@ -13,7 +13,7 @@ ReactDOM.render(
 		<Switch>
 			<Route exact path="/" render={()=><Library name={ labelName } />} />
 			<Route exact path="/books" component={Books} />
-			<Route exact path="/books/showPage/:numPage" render={()=><ShowPages name={ labelName } />} />
+			<Route exact path="/books/showPage/:numPage" render={(props) => <ShowPages {...props} name={ labelName } />} />
 			<Route component={ NotFound } />
 		</Switch>
 	</HashRouter>,
