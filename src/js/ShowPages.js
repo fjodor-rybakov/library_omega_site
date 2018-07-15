@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import Header from './Header';
 
 class ShowPages extends Component {
 	constructor(props) {
@@ -11,7 +10,6 @@ class ShowPages extends Component {
 	}
 
 	componentDidMount() {
-
 		fetch(`/books/showPage/${this.props.match.params.numPage}`)
 			.then(results => { 
 				return results.json() 
@@ -38,7 +36,6 @@ class ShowPages extends Component {
 
 		return (
 			<div>
-				<Header name={this.props.name} />
 				<div className="container">
 					<div className="row">
 						{bookElements}

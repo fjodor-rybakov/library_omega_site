@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+const queryString = require('query-string'); 
 
 class Header extends Component {
 	render() {
@@ -15,7 +16,7 @@ class Header extends Component {
 							<li><Link to="/">Главная</Link></li>
 							<li><Link to="/books/showPage/1">Просмотреть доступные книги</Link></li>
 							<li><Link to="/">Забронировать книгу</Link></li>
-							<li><Link to="/">Добавить книгу</Link></li>
+							<li><Link to="/books">Добавить книгу</Link></li>
 							<li><Link to="/">Удалить книгу</Link></li>
 							<from className="navbar-form navbar-right" role="search">
 								<div className="from-group">

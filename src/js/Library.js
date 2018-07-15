@@ -1,15 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import Header from './Header';
 import Content from './Content';
-import Footer from './Footer';
 
 class Library extends Component {
 	render() {
 		return (
 			<div>
-				<Header name={this.props.name}/>
 				<Content/>
-				<Footer/>
 			</div>
 		);
 	}
