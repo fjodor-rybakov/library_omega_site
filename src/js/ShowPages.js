@@ -10,6 +10,7 @@ class ShowPages extends Component {
 	}
 
 	componentDidMount() {
+		//console.log(this.props.location.search);
 		fetch(`/books/showPage/${this.props.match.params.numPage}`)
 			.then(results => { 
 				return results.json() 

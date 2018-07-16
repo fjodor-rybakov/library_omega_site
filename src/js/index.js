@@ -13,11 +13,37 @@ var labelName = "Library Omega";
 ReactDOM.render(
 	<HashRouter>
 		<div>
-			<Header name={labelName}/>
 			<Switch>
-				<Route exact path="/" render={()=><Library name={ labelName } />} />
-				<Route exact path="/books"  render={(props) => <Books {...props} name={ labelName } />} />
-				<Route exact path="/books/showPage/:numPage" render={(props) => <ShowPages {...props} name={ labelName } />} />
+				<Route 
+					exact 
+					path="/" 
+					render={(props) => 
+						<div>
+							<Header {...props} name={ labelName } />
+							<Library {...props} />
+						</div> 
+					}
+				/>
+				<Route 
+					exact 
+					path="/books" 
+					render={(props) => 
+						<div>
+							<Header {...props} name={ labelName } />
+							<Books {...props} />
+						</div> 
+					}
+				/>
+				<Route 
+					exact 
+					path="/books/showPage/:numPage" 
+					render={(props) => 
+						<div>
+							<Header {...props} name={ labelName } />
+							<ShowPages {...props} />
+						</div> 
+					} 
+				/>
 				<Route component={ NotFound } />
 			</Switch>
 			<Footer/>
