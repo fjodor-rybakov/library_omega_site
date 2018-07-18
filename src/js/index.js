@@ -4,6 +4,7 @@ import Library from './Library';
 import NotFound from './NotFound';
 import Books from './Books';
 import ShowPages from './ShowPages';
+import ShowBook from './ShowBook';
 import Header from './Header';
 import Footer from './Footer';
 import { HashRouter, Route, Switch, BrowserRouter as Router} from 'react-router-dom';
@@ -44,6 +45,16 @@ ReactDOM.render(
 						</div> 
 					} 
 				/>
+                <Route
+                    exact
+                    path="/books/:id"
+                    render={(props) =>
+                        <div>
+                            <Header {...props} name={ labelName } />
+                            <ShowBook {...props} />
+                        </div>
+                    }
+                />
 				<Route component={ NotFound } />
 			</Switch>
 			<Footer/>
