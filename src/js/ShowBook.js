@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Booking from './Booking'
 
 class ShowBook extends Component {
     constructor(props) {
@@ -7,27 +8,46 @@ class ShowBook extends Component {
         this.state = {
             book: {
                 book: {
+                    _id:'',
                     name: '',
                     link: '',
                     description: '',
                     authors: '',
-                    year: 0,
-                    available: true
+                    year: 0
                 },
                 lastBooking: {}
-            }
+            },
+            available: true
         };
+        this.booking = this.booking.bind(this);
+        this.cancelBooking = this.cancelBooking.bind(this);
+    }
+
+    booking(event) {
+        //event.preventDefault();
+        this.setState({available: false});
+        console.log(this.state);
+        Booking(this.state.book.book._id)
+        //TODO забронировать книгу
+    }
+
+    cancelBooking(event) {
+        //event.preventDefault();
+        this.setState({ available: true });
+        console.log(this.state)
+        //TODO снять бронь
     }
 
     componentDidMount() {
-        //console.log(this.props.location.search);
         fetch(`/books/${this.props.match.params.id}`)
             .then(results => {
                 return results.json()
             })
             .then(data => {
-                this.setState({book: data });
-              //  console.log(data);
+                this.setState({
+                    book: data,
+                    available: data.book.available
+                });
             })
             .catch(() => {
                 alert('Ошибка получения данных!');
@@ -35,8 +55,6 @@ class ShowBook extends Component {
     }
 
     render() {
-        console.log(this.state.book.book);
-        //console.log(this.props.match.params.numPage);
       const book = (
             <div className="col-12 col-md-auto">
                 <h2>{this.state.book.book.name}</h2>
@@ -44,18 +62,18 @@ class ShowBook extends Component {
                 <h4>{this.state.book.book.authors}</h4>
                 <h5>{this.state.book.book.year}</h5>
                 <p>{this.state.book.book.description}</p>
-                <p>Книга {this.state.book.book.available ? "доступна" : "недоступна"}</p>
+                <p>Книга {this.state.available ? "доступна" : "недоступна"}</p>
             </div>
        );
 
       let button = '';
-      if (this.state.book.book.available) {
+      if (this.state.available) {
           button = (
-              <button type="button" className="btn btn-primary">Забронировать</button>
+              <button onClick={this.booking} type="button" className="btn btn-primary">Забронировать</button>
           );
       } else{
           button = (
-              <button type="button" className="btn btn-info">Снять бронь</button>
+              <button onClick={this.cancelBooking} type="button" className="btn btn-info">Снять бронь</button>
           );
       }
         return (
