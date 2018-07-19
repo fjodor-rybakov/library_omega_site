@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router-dom';
+const queryString = require('query-string'); 
 
 class ShowPages extends Component {
 	constructor(props) {
@@ -11,8 +12,21 @@ class ShowPages extends Component {
 	}
 
 	componentDidMount() {
-		//console.log(this.props.location.search);
-		fetch(`/books/showPage/${this.props.match.params.numPage}`)
+		if (this.props.location.search) 
+		{
+			const values = queryString.parse(this.props.location.search);
+			fetch('/books/searchBook?substring=' + values.substring)
+				.then(results => { 
+					return results.json() 
+				})
+				.then(data => { 
+					this.setState({books: data });
+				})
+				.catch(() => { 
+					alert('Ошибка получения данных!');
+				});
+		} else {
+			fetch(`/books/showPage/${this.props.match.params.numPage}`)
 			.then(results => { 
 				return results.json() 
 			})
@@ -22,6 +36,8 @@ class ShowPages extends Component {
 			.catch(() => { 
 				alert('Ошибка получения данных!');
 			});
+		}
+		//console.log(this.props.location.search);
 	}
 
 	render() {

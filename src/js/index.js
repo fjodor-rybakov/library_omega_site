@@ -57,7 +57,7 @@ ReactDOM.render(
                 />
 				<Route component={ NotFound } />
 			</Switch>
-			<Footer/>
+			{/*<Footer/>*/}
 		</div>
 	</HashRouter>,
 	$('#root')[0]

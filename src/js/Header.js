@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 const queryString = require('query-string'); 
 
@@ -6,30 +6,15 @@ class Header extends Component {
 	constructor(props) {
 		super(props);
 
-		this.state = {
-			substring: ''
-		};
-
-		this.handlerSearchForm = this.handlerSearchForm.bind(this);
+		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	componentDidMount() {
-		const values = queryString.parse(this.props.location.search);
-		
-		console.log(this.props);
-	}
-
-	handlerSearchForm(event) {
-		this.setState({substring: event.target.value});
-		//console.log(event.target.value);
-		fetch('/books/searchBook?substring=' + event.target.value)
+	handleSubmit(event) {
+   		const value = event.target.elements[0].value.toLowerCase();
+		fetch('/books/searchBook?substring=' + value)
 			.then(results => { 
-				return results.json() 
-			})
-			.then(data => { 
-				console.log(data); 
-				//this.props.history.push({pathname: this.props.match.url, state: {message: "hello, im a passed message!"}});
-				//console.log(this.props);
+				this.props.history.push({pathname: this.props.match.url, search: "?substring=" + value});
+				window.location.reload();
 			})
 			.catch(() => { 
 				alert('Ошибка получения данных!');
@@ -37,32 +22,52 @@ class Header extends Component {
 	}
 
 	render() {
-		return (
-			<nav className="navbar navbar-default">
-				<div className="container">
-					<div className="navbar-header">
-						<Link to="/" className="navbar-brand">{this.props.name}</Link>
-					</div>
+		if (!(this.props.location.pathname === `/books/showPage/${this.props.match.params.numPage}`)) {
+			return (
+				<nav className="navbar navbar-default">
+					<div className="container">
+						<div className="navbar-header">
+							<Link to="/" className="navbar-brand">{this.props.name}</Link>
+						</div>
 
-					<div>
-						<ul className="nav navbar-nav">
-							<li><Link to="/">Главная</Link></li>
-							<li><Link to="/books/showPage/1">Просмотреть доступные книги</Link></li>
-							<li><Link to="/">Забронировать книгу</Link></li>
-							<li><Link to="/books">Добавить книгу</Link></li>
-							<li><Link to="/">Удалить книгу</Link></li>
-							<from className="navbar-form navbar-right" role="search" onSubmit={this.handlerSearchForm}>
-								<div className="from-group">
-									<input type="text" className="form-control" placeholder="Имя книги" 
-										value={this.state.substring} onChange={this.handlerSearchForm}/>
-									<button type="submit" className="btn btn-default">Поиск</button>
-								</div>
-							</from>
-						</ul>
+						<div>
+							<ul className="nav navbar-nav">
+								<li><Link to="/">Главная</Link></li>
+								<li><Link to="/books/showPage/1">Просмотреть доступные книги</Link></li>
+								<li><Link to="/">Забронировать книгу</Link></li>
+								<li><Link to="/books">Добавить книгу</Link></li>
+								<li><Link to="/">Удалить книгу</Link></li>
+							</ul>
+						</div>
 					</div>
-				</div>
-			</nav>
-		);
+				</nav>
+			);
+		} else 
+			return (
+				<nav className="navbar navbar-default">
+					<div className="container">
+						<div className="navbar-header">
+							<Link to="/" className="navbar-brand">{this.props.name}</Link>
+						</div>
+
+						<div>
+							<ul className="nav navbar-nav">
+								<li><Link to="/">Главная</Link></li>
+								<li><Link to="/books/showPage/1">Просмотреть доступные книги</Link></li>
+								<li><Link to="/">Забронировать книгу</Link></li>
+								<li><Link to="/books">Добавить книгу</Link></li>
+								<li><Link to="/">Удалить книгу</Link></li>
+								<form onSubmit={this.handleSubmit} className="navbar-form navbar-right" role="search">
+									<div className="from-group">
+										<input type="text" className="form-control" placeholder="Имя книги" required="required"/>
+										<button type="submit" className="btn btn-default">Поиск</button>
+									</div>
+								</form>
+							</ul>
+						</div>
+					</div>
+				</nav>
+			);
 	}
 }
 
