@@ -8,58 +8,64 @@ import ShowBook from './ShowBook';
 import Header from './Header';
 import Footer from './Footer';
 import { HashRouter, Route, Switch, BrowserRouter as Router} from 'react-router-dom';
+import { createStore } from 'redux';
+import { connect, Provider } from 'react-redux';
+import reducer from './reducers';
 
-var labelName = "Library Omega";
+const labelName = "Library Omega";
+const store = createStore(reducer);
 
 ReactDOM.render(
-	<HashRouter>
-		<div>
-			<Switch>
-				<Route 
-					exact 
-					path="/" 
-					render={(props) => 
-						<div>
-							<Header {...props} name={ labelName } />
-							<Library {...props} />
-						</div> 
-					}
-				/>
-				<Route 
-					exact 
-					path="/books" 
-					render={(props) => 
-						<div>
-							<Header {...props} name={ labelName } />
-							<Books {...props} />
-						</div> 
-					}
-				/>
-				<Route 
-					exact 
-					path="/books/showPage/:numPage" 
-					render={(props) => 
-						<div>
-							<Header {...props} name={ labelName } />
-							<ShowPages {...props} />
-						</div> 
-					} 
-				/>
-                <Route
-                    exact
-                    path="/books/:id"
-                    render={(props) =>
-                        <div>
-                            <Header {...props} name={ labelName } />
-                            <ShowBook {...props} />
-                        </div>
-                    }
-                />
-				<Route component={ NotFound } />
-			</Switch>
-			{/*<Footer/>*/}
-		</div>
-	</HashRouter>,
+	<Provider store={store}>
+		<HashRouter>
+			<div>
+				<Switch>
+					<Route 
+						exact 
+						path="/" 
+						render={(props) => 
+							<div>
+								<Header {...props} name={ labelName } />
+								<Library {...props} />
+							</div> 
+						}
+					/>
+					<Route 
+						exact 
+						path="/books" 
+						render={(props) => 
+							<div>
+								<Header {...props} name={ labelName } />
+								<Books {...props} />
+							</div> 
+						}
+					/>
+					<Route 
+						exact 
+						path="/books/showPage/:numPage" 
+						render={(props) => 
+							<div>
+								<Header {...props} name={ labelName } />
+								<ShowPages {...props} />
+							</div> 
+						} 
+					/>
+	                <Route
+	                    exact
+	                    path="/books/:id"
+	                    render={(props) =>
+	                        <div>
+	                            <Header {...props} name={ labelName } />
+	                            <ShowBook {...props} />
+	                        </div>
+	                    }
+	                />
+					<Route component={ NotFound } />
+				</Switch>
+				{/*<Footer/>*/}
+			</div>
+		</HashRouter>
+	</Provider>,
 	$('#root')[0]
 );
 /*

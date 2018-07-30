@@ -1,24 +1,22 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 const queryString = require('query-string'); 
+import { connect } from 'react-redux';
 
 class Header extends Component {
 	constructor(props) {
 		super(props);
+
+		this.state = {
+			dataBook: []
+		}
 
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
 	handleSubmit(event) {
    		const value = event.target.elements[0].value.toLowerCase();
-		fetch('/books/searchBook?substring=' + value)
-			.then(results => { 
-				this.props.history.push({pathname: this.props.match.url, search: "?substring=" + value});
-				window.location.reload();
-			})
-			.catch(() => { 
-				alert('Ошибка получения данных!');
-			});
+   		this.props.onSendDataBook(value);
 	}
 
 	render() {
@@ -71,4 +69,11 @@ class Header extends Component {
 	}
 }
 
-export default Header;
+export default connect(
+	state => ({}),
+	dispatch => ({
+		onSendDataBook: (substr) => {
+			dispatch({ type: 'SEND_DATA_BOOK', payload: substr })
+		}
+	})
+)(Header);

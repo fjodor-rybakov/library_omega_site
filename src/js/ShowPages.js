@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router-dom';
 const queryString = require('query-string'); 
+import { connect } from 'react-redux';
 
 class ShowPages extends Component {
 	constructor(props) {
@@ -9,40 +10,49 @@ class ShowPages extends Component {
 		this.state = {
 			books: [] // его тоже выводит хз почему
 		};
+
+		this.setNewDataBook = this.setNewDataBook.bind(this);
 	}
 
 	componentDidMount() {
-		if (this.props.location.search) 
-		{
-			const values = queryString.parse(this.props.location.search);
-			fetch('/books/searchBook?substring=' + values.substring)
-				.then(results => { 
-					return results.json() 
-				})
-				.then(data => { 
-					this.setState({books: data });
-				})
-				.catch(() => { 
-					alert('Ошибка получения данных!');
-				});
-		} else {
-			fetch(`/books/showPage/${this.props.match.params.numPage}`)
+		fetch(`/books/showPage/${this.props.match.params.numPage}`)
 			.then(results => { 
 				return results.json() 
 			})
 			.then(data => { 
+				//console.log(data);
 				this.setState({books: data }); 
 			})
 			.catch(() => { 
 				alert('Ошибка получения данных!');
 			});
-		}
 		//console.log(this.props.location.search);
+	}
+
+	setNewDataBook(substr) {
+		fetch('/books/searchBook?substring=' + substr)
+			.then(results => { 
+ 				return results.json() 
+ 			})
+ 			.then(data => { 
+ 				this.setState({
+                    books: data
+                });
+ 			})
+			.catch(() => { 
+				alert('Ошибка получения данных!');
+			})
 	}
 
 	render() {
 		//console.log(this.state.books);
 		//console.log(this.props.match.params.numPage);
+		//console.log(this.props.onSendDataBook);
+		//console.log(this.props.onSendDataBook.serachSubstr);
+		if (this.props.onSendDataBook.serachSubstr !== '') {
+			this.setNewDataBook(this.props.onSendDataBook.serachSubstr);
+			this.props.onSendDataBook.serachSubstr = '';
+		}
 		let link;
 
 		const bookElements = this.state.books.map((item, index) =>
@@ -67,4 +77,9 @@ class ShowPages extends Component {
 	}
 }
 
-export default ShowPages;
+export default connect(
+	state => ({
+		onSendDataBook: state
+	}),
+	dispatch => ({})
+)(ShowPages);
