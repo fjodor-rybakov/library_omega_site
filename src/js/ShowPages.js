@@ -8,25 +8,25 @@ class ShowPages extends Component {
 		super(props);
 
 		this.state = {
-			books: [] // его тоже выводит хз почему
+			books: []
 		};
 
 		this.setNewDataBook = this.setNewDataBook.bind(this);
+		this.backPage = this.backPage.bind(this);
+		this.forwardPage = this.forwardPage.bind(this);
 	}
 
 	componentDidMount() {
-		fetch(`/books/showPage/${this.props.match.params.numPage}`)
+		fetch(`/books/showPage/${this.props.match.params.numPage <= 1 ? 1 : +this.props.match.params.numPage}`)
 			.then(results => { 
 				return results.json() 
 			})
 			.then(data => { 
-				//console.log(data);
 				this.setState({books: data }); 
 			})
 			.catch(() => { 
 				alert('Ошибка получения данных!');
 			});
-		//console.log(this.props.location.search);
 	}
 
 	setNewDataBook(substr) {
@@ -44,15 +44,38 @@ class ShowPages extends Component {
 			})
 	}
 
+	backPage() {
+		fetch(`/books/showPage/${+this.props.match.params.numPage <= 1 ? 1 : +this.props.match.params.numPage - 1}`)
+			.then(results => { 
+				return results.json() 
+			})
+			.then(data => { 
+				this.setState({books: data }); 
+			})
+			.catch(() => { 
+				alert('Ошибка получения данных!');
+			});
+	}
+
+	forwardPage() {
+		fetch(`/books/showPage/${+this.props.match.params.numPage + 1}`)
+			.then(results => { 
+				return results.json() 
+			})
+			.then(data => { 
+				this.setState({books: data }); 
+			})
+			.catch(() => { 
+				alert('Ошибка получения данных!');
+			});
+	}
+
 	render() {
-		//console.log(this.state.books);
-		//console.log(this.props.match.params.numPage);
-		//console.log(this.props.onSendDataBook);
-		//console.log(this.props.onSendDataBook.serachSubstr);
 		if (this.props.onSendDataBook.serachSubstr !== '') {
 			this.setNewDataBook(this.props.onSendDataBook.serachSubstr);
 			this.props.onSendDataBook.serachSubstr = '';
 		}
+
 		let link;
 
 		const bookElements = this.state.books.map((item, index) =>
@@ -65,6 +88,9 @@ class ShowPages extends Component {
 			</div>
 		);
 
+		var link_forward = `/books/showPage/${+this.props.match.params.numPage + 1}`;
+		var link_back = `/books/showPage/${+this.props.match.params.numPage <= 1 ? 1 : +this.props.match.params.numPage - 1}`;
+
 		return (
 			<div>
 				<div className="container">
@@ -72,6 +98,16 @@ class ShowPages extends Component {
 						{bookElements}
 					</div>
 				</div>
+				<nav className="navbar navbar-default">
+					<div className="container">
+						<div>
+							<ul className="nav navbar-nav">
+								<li><Link to={link_back} onClick={this.backPage}>Предыдущая страница</Link></li>
+								<li><Link to={link_forward} onClick={this.forwardPage}>Следующая страница</Link></li>
+							</ul>
+						</div>
+					</div>
+				</nav>
 			</div>
 		);
 	}
