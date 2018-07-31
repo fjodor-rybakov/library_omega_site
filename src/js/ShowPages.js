@@ -14,6 +14,8 @@ class ShowPages extends Component {
 		this.setNewDataBook = this.setNewDataBook.bind(this);
 		this.backPage = this.backPage.bind(this);
 		this.forwardPage = this.forwardPage.bind(this);
+		this.availableBook = this.availableBook.bind(this);
+		this.disavailableBook = this.disavailableBook.bind(this);
 	}
 
 	componentDidMount() {
@@ -70,6 +72,46 @@ class ShowPages extends Component {
 			});
 	}
 
+	availableBook(event) {
+		var checked = event.target.checked;
+		if (checked) {
+			fetch(`/books?available=true`)
+				.then(results => { 
+					return results.json() 
+				})
+				.then(data => { 
+					this.setState({books: data }); 
+				})
+				.catch(() => { 
+					alert('Ошибка получения данных!');
+				});
+			$("#disable").prop("disabled", true);
+		} else {
+			$("#disable").prop("disabled", false);
+			this.componentDidMount();
+		}
+	}
+
+	disavailableBook(event) {
+		var checked = event.target.checked;
+		if (checked) {
+			fetch(`/books?available=false`)
+				.then(results => { 
+					return results.json() 
+				})
+				.then(data => { 
+					this.setState({books: data }); 
+				})
+				.catch(() => { 
+					alert('Ошибка получения данных!');
+				});
+			$("#able").prop("disabled", true);
+		} else {
+			$("#able").prop("disabled", false);
+			this.componentDidMount();
+		}
+	}
+
 	render() {
 		if (this.props.onSendDataBook.serachSubstr !== '') {
 			this.setNewDataBook(this.props.onSendDataBook.serachSubstr);
@@ -79,7 +121,7 @@ class ShowPages extends Component {
 		let link;
 
 		const bookElements = this.state.books.map((item, index) =>
-			<div key = {index} className="col-md-3">
+			<div key = {index} className="col-md-4">
 				<span style= {{ display: 'none' }}>{link = '/books/'}</span>
 				<h2><Link to= {link += item._id}> {item.name} </Link></h2>
 				<a href={item.link}>Ссылка на магазин</a>
@@ -104,6 +146,8 @@ class ShowPages extends Component {
 							<ul className="nav navbar-nav">
 								<li><Link to={link_back} onClick={this.backPage}>Предыдущая страница</Link></li>
 								<li><Link to={link_forward} onClick={this.forwardPage}>Следующая страница</Link></li>
+								<li className="cbavable"><input type="checkbox" id="able" onClick={this.availableBook}/>Доступные</li>
+								<li className="cbavable"><input type="checkbox" id="disable" onClick={this.disavailableBook}/>Недоступные</li>
 							</ul>
 						</div>
 					</div>

@@ -33,3 +33,14 @@
 	height: 300px;
 	background-color: #007633;
 }
+
+.cbavable
+{
+	margin: 15px auto;
+	padding-right: 10px;
+}
+
+#able, #disable
+{
+	margin-right: 10px;
+}
