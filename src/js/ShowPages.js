@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router-dom';
-const queryString = require('query-string'); 
 import { connect } from 'react-redux';
 
 class ShowPages extends Component {

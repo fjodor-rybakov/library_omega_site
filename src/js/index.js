@@ -7,6 +7,7 @@ import ShowPages from './ShowPages';
 import ShowBook from './ShowBook';
 import Header from './Header';
 import Footer from './Footer';
+import DeleteBook from './DeleteBook';
 import { HashRouter, Route, Switch, BrowserRouter as Router} from 'react-router-dom';
 import { createStore } from 'redux';
 import { connect, Provider } from 'react-redux';
@@ -30,6 +31,16 @@ ReactDOM.render(
 							</div> 
 						}
 					/>
+					<Route
+	                    exact
+	                    path="/books/delete"
+	                    render={(props) =>
+	                        <div>
+	                            <Header {...props} name={ labelName } />
+	                            <DeleteBook {...props} />
+	                        </div>
+	                    }
+	                />
 					<Route 
 						exact 
 						path="/books" 

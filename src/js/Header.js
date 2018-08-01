@@ -34,7 +34,7 @@ class Header extends Component {
 								<li><Link to="/books/showPage/1">Просмотреть доступные книги</Link></li>
 								<li><Link to="/">Забронировать книгу</Link></li>
 								<li><Link to="/books">Добавить книгу</Link></li>
-								<li><Link to="/">Удалить книгу</Link></li>
+								<li><Link to="/books/delete">Удалить книгу</Link></li>
 							</ul>
 						</div>
 					</div>
@@ -54,7 +54,7 @@ class Header extends Component {
 								<li><Link to="/books/showPage/1">Просмотреть доступные книги</Link></li>
 								<li><Link to="/">Забронировать книгу</Link></li>
 								<li><Link to="/books">Добавить книгу</Link></li>
-								<li><Link to="/">Удалить книгу</Link></li>
+								<li><Link to="/books/delete">Удалить книгу</Link></li>
 								<form onSubmit={this.handleSubmit} className="navbar-form navbar-right" role="search">
 									<div className="from-group">
 										<input type="text" className="form-control" placeholder="Имя книги" required="required"/>
